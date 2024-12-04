@@ -9,7 +9,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof (CharacterController))]
     [RequireComponent(typeof (AudioSource))]
     public class FirstPersonController : MonoBehaviour
+
+   
     {
+        public int health = 100;
         [SerializeField] private bool m_IsWalking;
         [SerializeField] private float m_WalkSpeed;
         [SerializeField] private float m_RunSpeed;
@@ -254,6 +257,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 return;
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
+
+            Debug.Log("Hit by " + hit.gameObject.name);
+
+            if (hit.gameObject.CompareTag("Projectile"))
+            {
+                health = health - 5;
+                Destroy(hit.gameObject);
+            }
+            if (health <= 0)
+            {
+                //die code here
+
+            }
         }
     }
 }
